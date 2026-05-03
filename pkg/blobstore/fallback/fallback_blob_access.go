@@ -115,6 +115,7 @@ func (getFromCompositeErrorHandler) Done() {}
 func (ba *fallbackBlobAccess) Put(ctx context.Context, digest digest.Digest, buf buffer.Buffer) error {
 	sizeBytes, err := buf.GetSizeBytes()
 	if err != nil {
+		buf.Discard()
 		return err
 	}
 	primaryBuf, secondaryBuf := buf.CloneCopy(int(sizeBytes))
